@@ -31,16 +31,17 @@ const Home = () => {
 
     return (
         <>
-            <div className="pt-20 pb-12 min-h-screen bg-blue-200 ">
+            <div className="pt-20 pb-12 min-h-screen bg-blue-200 dark:bg-gray-900">
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-2 p-4 ">
                     {allPosts.map((post) => (
+                        <div key={post.id}>
                         <NavLink to={`/posts/${post.id}`}>
                             <div
-                                key={post.id}
+                                
                                 //onClick={navigation(`/posts/${post.id}`)}
-                                className=" border rounded shadow hover:shadow-lg cursor-pointer bg-slate-100"
+                                className=" border rounded shadow hover:shadow-lg cursor-pointer bg-slate-100 dark:bg-gray-800"
                             >
-                                <p className="text-gray-500 text-center">
+                                <p className="text-gray-500 dark:text-gray-400 text-center">
                                     {new Date(post.date_created).toLocaleString("en-eu", {
                                         year: "numeric",
                                         month: "long",
@@ -49,10 +50,10 @@ const Home = () => {
                                         minute: "numeric",
                                     })}
                                 </p>
-                                <h2 className="text-xl font-bold mb-2 text-center">
+                                <h2 className="text-xl font-bold mb-2 text-center dark:text-gray-100">
                                     {post.author}
                                 </h2>
-                                <h2 className="text-xl font-bold mb-2 text-center">
+                                <h2 className="text-xl font-bold mb-2 text-center dark:text-gray-100">
                                     {post.title}
                                 </h2>
                                 {post.cover ? (
@@ -68,6 +69,7 @@ const Home = () => {
                                 )}
                             </div>
                         </NavLink>
+                        </div>
                     ))}
                 </div>
             </div>

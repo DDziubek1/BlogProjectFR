@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function EditPost() {
     const { register, handleSubmit } = useForm();
     const { id } = useParams();
-    const notifyEdition = () => toast("Edited the post!");
+    const notifyEdition = () => toast("All fields are required!");
     const navigate = useNavigate();
     const onSubmit = data => {
         const date = new Date();
@@ -41,14 +41,14 @@ function EditPost() {
 
 
     return (
-        <div className="py-2 bg-sky-100 min-h-screen flex justify-center items-center">
-            <div className='w-full max-w-lg'>
-                <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col bg-sky-700 p-4 rounded-md border-2 border-white'>
-                    <input {...register("author")} placeholder="Author" className='mb-4 p-2 rounded-md' />
-                    <input {...register("title")} placeholder="Title" className='mb-4 p-2 rounded-md' />
-                    <input {...register("cover")} placeholder="Cover Image URL" className='mb-4 p-2 rounded-md' />
-                    <textarea {...register("content")} placeholder="Content" className='mb-4 p-2 rounded-md h-32' />
-                    <input type="submit" onClick={notifyEdition} value='Edit your post!' className='bg-white text-sky-700 p-2 rounded-md cursor-pointer hover:bg-gray-200' />
+        <div className="py-2 bg-sky-100 dark:bg-gray-900 min-h-screen flex justify-center items-center">
+            <div className='w-full max-w-lg '>
+                <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col bg-sky-700 dark:bg-gray-800 dark:border-gray-700 p-4 rounded-md border-2 border-white'>
+                    <input {...register("author", { required: true })} placeholder="Author" className='mb-4 p-2 rounded-md dark:bg-gray-700 dark:text-gray-300' />
+                    <input {...register("title", { required: true })} placeholder="Title" className='mb-4 p-2 rounded-md dark:bg-gray-700 dark:text-gray-300' />
+                    <input {...register("cover", { required: true })} placeholder="Cover Image URL" className='mb-4 p-2 rounded-md dark:bg-gray-700 dark:text-gray-300' />
+                    <textarea {...register("content", { required: true })} placeholder="Content" className='mb-4 p-2 rounded-md h-32 dark:bg-gray-700 dark:text-gray-300' />
+                    <input type="submit" onClick={notifyEdition} value='Edit your post!' className='bg-white text-sky-700 p-2 rounded-md cursor-pointer hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300' />
                     <ToastContainer />
                 </form>
             </div>

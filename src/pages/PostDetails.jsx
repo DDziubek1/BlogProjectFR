@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const PostDetails = () => {
     const [post, setPost] = useState(null);
     const { id } = useParams();
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
         const fetchPost = async () => {
@@ -20,6 +21,10 @@ const PostDetails = () => {
 
         fetchPost();
     }, [id]);
+
+    const togglePopup = () => {
+        setIsPopupVisible(!isPopupVisible);
+    };
 
     if (!post) {
         return <p className="p-60">POST NOT FOUND</p>;
@@ -56,32 +61,32 @@ const PostDetails = () => {
 
     return (
         <>
-            <div className="pt-20 pb-12 h-screen bg-blue-200 ">
-                <div className="flex gap-4 mt-2 p-4 h-5/6  justify-center">
+            <div className="pt-20 pb-12 h-screen bg-blue-200 dark:bg-gray-900">
+                <div className="flex gap-4 mt-2 p-4 h-5/6  justify-center dark:text-white">
                     <div
                         key={post.id}
-                        className=" border border-blue-700 rounded shadow-lg bg-slate-100 w-4/6 max-w-4/6 flex "
+                        className=" border border-blue-700 dark:border-gray-700 rounded shadow-lg bg-slate-100 dark:bg-gray-800 w-4/6 max-w-4/6 flex "
                     >
                         <div className="w-5/12">
                             {post.cover ? (
                                 <img
-                                    className="h-full w-full  border-r-2 border-blue-500 object-scale-down"
+                                    className="h-full w-full  border-r-2 border-blue-500 dark:border-gray-600 dark:text-white object-scale-down"
                                     src={post.cover}
                                     alt={post.title}
                                 />
                             ) : (
-                                <div className=" h-[100%] bg-gray-200 border-r-2 border-blue-700 flex items-center justify-center rounded">
-                                    <span className="text-gray-500">No Image Available</span>
+                                <div className=" h-[100%] bg-gray-200  dark:bg-gray-700 border-r-2 border-blue-700 dark:border-gray-60 flex items-center justify-center rounded">
+                                    <span className="text-gray-500 dark:text-gray-400">No Image Available</span>
                                 </div>
                             )}
                         </div>
                         <div className="flex flex-col w-7/12 ">
-                            <div className="flex bg-sky-700 text-end">
+                            <div className="flex bg-sky-700 dark:bg-sky-800 text-end">
                                 <div className="flex ml-auto">
                                     <NavLink to={`/posts/${id}/edit`}>
                                         <img src={editPost} alt="Edit" className='w-10 h-10 p-2' />
                                     </NavLink>
-                                    <img src={deletePost} onClick={handleDelete} alt="Delete" className='w-10 h-10 p-2 hover:cursor-pointer' />
+                                    <img src={deletePost} onClick={togglePopup} alt="Delete" className='w-10 h-10 p-2 hover:cursor-pointer' />
                                 </div>
                             </div>
                             <div className="px-4 pb-4">
@@ -115,6 +120,15 @@ const PostDetails = () => {
                 </div>
 
             </div>
+            {isPopupVisible && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white dark:bg-gray-800 p-8 rounded shadow-lg text-center">
+                        <h2 className="text-xl font-bold mb-4 dark:text-gray-300">Are you sure you want to delete this post?</h2>
+                        <button onClick={handleDelete} className="bg-sky-700 hover:bg-sky-900 text-white dark:text-gray-300 p-2 rounded mr-4">Yes, Delete</button>
+                        <button onClick={togglePopup} className="bg-sky-700 hover:bg-sky-900 text-white dark:text-gray-300 p-2 rounded">Cancel</button>
+                    </div>
+                </div>
+            )}
             <ToastContainer />
         </>
     );

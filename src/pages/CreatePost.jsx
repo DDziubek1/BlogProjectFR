@@ -5,8 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 function CreatePost() {
-    const { register, handleSubmit } = useForm();
-    const notifyCreation = () => toast("Created the post!");
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const notifyCreation = () => toast(` All fields are required`);
     const navigate = useNavigate();
     const onSubmit = data => {
 
@@ -31,7 +31,7 @@ function CreatePost() {
                 console.error(error);
             });
 
-        notifyCreation();
+        
         navigate('/');
     };
 
@@ -39,14 +39,14 @@ function CreatePost() {
 
 
     return (
-        <div className="py-2 bg-sky-100 min-h-screen flex justify-center items-center">
+        <div className="py-2 bg-sky-100 dark:bg-gray-900 min-h-screen flex justify-center items-center">
             <div className='w-full max-w-lg'>
-                <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col bg-sky-700 p-4 rounded-md border-2 border-white'>
-                    <input {...register("author")} placeholder="Author" className='mb-4 p-2 rounded-md' />
-                    <input {...register("title")} placeholder="Title" className='mb-4 p-2 rounded-md' />
-                    <input {...register("cover")} placeholder="Cover Image URL" className='mb-4 p-2 rounded-md' />
-                    <textarea {...register("content")} placeholder="Content" className='mb-4 p-2 rounded-md h-32' />
-                    <input type="submit" value='Create new post' className='bg-white text-sky-700 p-2 rounded-md cursor-pointer hover:bg-gray-200' />
+                <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col bg-sky-700 dark:bg-gray-800 dark:border-gray-700 p-4 rounded-md border-2 border-white'>
+                    <input {...register("author", { required: true })} placeholder="Author" className='mb-4 p-2 rounded-md dark:bg-gray-700 dark:text-gray-300' />
+                    <input {...register("title", { required: true })} placeholder="Title" className='mb-4 p-2 rounded-md dark:bg-gray-700 dark:text-gray-300' />
+                    <input {...register("cover", { required: true })} placeholder="Cover Image URL" className='mb-4 p-2 rounded-md dark:bg-gray-700 dark:text-gray-300' />
+                    <textarea {...register("content", { required: true })} placeholder="Content" className='mb-4 p-2 rounded-md h-32 dark:bg-gray-700 dark:text-gray-300' />
+                    <input type="submit" value='Create new post' onClick={notifyCreation} className='bg-white text-sky-700 p-2 rounded-md cursor-pointer hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300' />
                 </form>
             </div>
             <ToastContainer />
