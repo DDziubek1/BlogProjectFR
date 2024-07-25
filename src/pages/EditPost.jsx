@@ -1,17 +1,18 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
+import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-
-function CreatePost() {
+function EditPost() {
     const { register, handleSubmit } = useForm();
-    const notifyCreation = () => toast("Created the post!");
+    const { id } = useParams();
+    const notifyEdition = () => toast("Edited the post!");
     const navigate = useNavigate();
     const onSubmit = data => {
-
-        const response = fetch('http://localhost:3000/posts', {
-            method: "POST",
+        const date = new Date();
+        const response = fetch(`http://localhost:3000/posts/${id}`, {
+            method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
 
@@ -20,7 +21,8 @@ function CreatePost() {
                 "author": data.author,
                 "title": data.title,
                 "content": data.content,
-                "cover": data.cover
+                "cover": data.cover,
+                "date": date
             })
         })
             .then(response => response.json())
@@ -31,8 +33,8 @@ function CreatePost() {
                 console.error(error);
             });
 
-        notifyCreation();
-        navigate('/');
+        navigate(`/posts/${id}`);
+
     };
 
 
@@ -46,12 +48,13 @@ function CreatePost() {
                     <input {...register("title")} placeholder="Title" className='mb-4 p-2 rounded-md' />
                     <input {...register("cover")} placeholder="Cover Image URL" className='mb-4 p-2 rounded-md' />
                     <textarea {...register("content")} placeholder="Content" className='mb-4 p-2 rounded-md h-32' />
-                    <input type="submit" value='Create new post' className='bg-white text-sky-700 p-2 rounded-md cursor-pointer hover:bg-gray-200' />
+                    <input type="submit" onClick={notifyEdition} value='Edit your post!' className='bg-white text-sky-700 p-2 rounded-md cursor-pointer hover:bg-gray-200' />
+                    <ToastContainer />
                 </form>
             </div>
-            <ToastContainer />
+
         </div>
     );
 }
 
-export default CreatePost;
+export default EditPost;
