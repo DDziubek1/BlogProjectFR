@@ -59,10 +59,10 @@ function EditPost() {
         <div className="py-2 bg-sky-100 dark:bg-gray-900 min-h-screen flex justify-center items-center">
             <div className='w-full max-w-lg '>
                 <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col bg-sky-700 dark:bg-gray-800 dark:border-gray-700 p-4 rounded-md border-2 border-white'>
-                    <input {...register("author", { required: true })} placeholder="Author" value={postData.author || ""} className='mb-4 p-2 rounded-md dark:bg-gray-700 dark:text-gray-300' />
-                    <input {...register("title", { required: true })} placeholder="Title" value={postData.title || ""} className='mb-4 p-2 rounded-md dark:bg-gray-700 dark:text-gray-300' />
-                    <input {...register("cover", { required: true })} placeholder="Cover Image URL" value={postData.cover || ""} className='mb-4 p-2 rounded-md dark:bg-gray-700 dark:text-gray-300' />
-                    <textarea {...register("content", { required: true })} placeholder="Content" value={postData.content || ""} className='mb-4 p-2 rounded-md h-32 dark:bg-gray-700 dark:text-gray-300' />
+                    <input {...register("author", { required: true })} placeholder={postData.author} className='mb-4 p-2 rounded-md dark:bg-gray-700 dark:text-gray-300' />
+                    <input {...register("title", { required: true })} placeholder={postData.title} className='mb-4 p-2 rounded-md dark:bg-gray-700 dark:text-gray-300' />
+                    <input {...register("cover", { required: true })} placeholder={postData.cover} className='mb-4 p-2 rounded-md dark:bg-gray-700 dark:text-gray-300' />
+                    <textarea {...register("content", { required: true })} placeholder={postData.content} className='mb-4 p-2 rounded-md h-32 dark:bg-gray-700 dark:text-gray-300' />
                     <input type="submit" onClick={notifyEdition} value='Edit your post!' className='bg-white text-sky-700 p-2 rounded-md cursor-pointer hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300' />
                     <ToastContainer />
                 </form>
